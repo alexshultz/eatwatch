@@ -1,6 +1,6 @@
 # Code map
 
-Source root: `/Users/alex/Projects/EatWatch`.
+This repository is the source tree. A checkout on Alex's Mac is `/Users/alex/Projects/EatWatch`.
 
 `EatWatchCore` is a local Swift package (tools 6.4, language mode Swift 6, iOS 27, macOS 27, watchOS 27). The app targets depend on it. New Swift files in `EatWatchCore/Sources/EatWatchCore/` are picked up by SwiftPM. The app and watch folders are synchronized Xcode groups, so a new Swift file there is picked up too. `Supporting/` is not a synchronized group. A new file there needs a `project.pbxproj` reference if Xcode must see it.
 
@@ -59,7 +59,7 @@ Source root: `/Users/alex/Projects/EatWatch`.
 
 ## Tests
 
-Run from `EatWatchCore` with `swift test`. As of 2026-10-08, 31 tests passed.
+Run from `EatWatchCore` with `swift test`. Trust that run's output. The last recorded count is in `llm/05-status.md`.
 
 | File | Covers |
 | --- | --- |

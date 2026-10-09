@@ -2,6 +2,8 @@
 
 Read this before editing. These are decisions Alex already made. If a task asks for something this file forbids, stop and say so. Do not ship a partial version that gets the data into iCloud by another path.
 
+`llm/check.sh` fails when a later edit breaks the greppable parts of these rules: no `fatPercent` in Swift, the agreement line says `saves imported data`, the rung range is `1...48`, the watch entitlement has no iCloud container, and the watch app still calls `EatWatchSession.open` with CloudKit left on. Run it from the repository root.
+
 ## Health and iCloud
 
 App Store Review Guideline 5.1.3(ii) (guidelines dated 2026-06-08) says an app may not store personal health information in iCloud. That binds the app. It is not lifted because the user taps a button, because a column was deleted, or because the file once passed through The Hacker's Diet Online.

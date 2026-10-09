@@ -13,7 +13,7 @@ Quick answers:
 
 | Layer | What it holds | Survives relaunch | Syncs |
 | --- | --- | --- | --- |
-| EatWatch log | Days the user typed or imported, plus the plan | Yes, in SwiftData | Yes, CloudKit private database, except the watch |
+| EatWatch log | Days the user typed or imported, plus the plan | Yes, in SwiftData | CloudKit private database on iPhone, iPad, and Mac. The watch open is unverified. |
 | Health overlay | Body-mass readings for the trend | Only by reading Health again | Health's own sync, not this app's |
 
 `LogStore` keeps the log in `entries` and the overlay in `healthReadings`. `publishAnalysis` calls `HealthLogMerge.entries` and then `TrendEngine.analyze`. `applyHealth` replaces the overlay and republishes. It does not insert `DayRecord`s.
@@ -131,7 +131,7 @@ The apostrophe in line 2 is the typographic `’` used in `AppName.importGuideli
 
 `ResultsObserver` on the main context, with `withContinuousObservation(options: .didSet)`, reloads when the store changes, including a CloudKit import. The token is `~Copyable` and is stored with `@ObservationIgnored`. `RootView` also calls `session.refresh()` when the scene becomes active.
 
-iPhone and watch Info.plists include `UIBackgroundModes` = `remote-notification` via `Supporting/BackgroundModes.plist`. The Mac plist does not. Do not put an Info.plist inside the synchronized `EatWatch/` or `EatWatchWatch/` groups. Xcode both copies and processes it, and the build fails. `EatWatch.entitlements` stays at the project root, outside the synchronized iPhone group. `EatWatchWatch/EatWatchWatch.entitlements` is inside the synchronized watch group. Both are referenced by `CODE_SIGN_ENTITLEMENTS`.
+iPhone and watch Info.plists include `UIBackgroundModes` = `remote-notification` via `Supporting/BackgroundModes.plist`. The Mac plist does not. Do not put an Info.plist inside the synchronized `EatWatch/` or `EatWatchWatch/` groups. Xcode both copies and processes it, and the build fails. `EatWatch.entitlements` stays at the project root, outside the synchronized iPhone group. `EatWatchWatch/EatWatchWatch.entitlements` is inside the synchronized watch group. Both are referenced by `CODE_SIGN_ENTITLEMENTS`. The watch app calls `EatWatchSession.open` with CloudKit left on. Its entitlement file has no iCloud container. Whether that open joins this log or traps is unverified. The rule is in `llm/01-rules.md`.
 
 `ICloudSyncState` is account status, not a proof that a row arrived on another device. Two-device sync had not been watched as of 2026-10-08.
 

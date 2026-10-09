@@ -10,10 +10,10 @@ This file is history. Do not implement a feature from it unless Alex asks again.
 - Mac Debug `xcodebuild` succeeded and was signed `Apple Development: alex.shultz@mac.com (4TRS65CTUB)` with a Mac Team Provisioning Profile for `com.alexshultz.EatWatch`.
 - The built Mac Info.plist had `CFBundleDisplayName` EatWatch, and Health usage strings that mention weight only.
 - Opening that Debug app showed Today. Settings showed the import footnote beginning "EatWatch saves imported data to the EatWatch iCloud log." The agreement sheet showed all three lines and the title "Import only your own log".
-- Watch Debug `xcodebuild` for `generic/platform=watchOS` succeeded. It was not installed. `CFBundleDisplayName` was EatWatch. That product's `CFBundleName` remained EatWatchWatch. The project file now sets the watch `CFBundleName` from `APP_DISPLAY_NAME`.
+- Watch Debug `xcodebuild` for `generic/platform=watchOS` succeeded. It was not installed. `CFBundleDisplayName` was EatWatch. That product's `CFBundleName` remained EatWatchWatch.
 - The iPhone was not updated to this build. An earlier HealthKit install was copied to the phone and did not launch because the phone was locked. That older install still requested body-fat access.
 
-On 2026-10-09 the Xcode source and these notes were published together in `alexshultz/eatwatch`.
+On 2026-10-09 the Xcode source and these notes were published together in `alexshultz/eatwatch`. A later commit on that branch added the first-read answers in `README.md` and `llm/check.sh`, and took the current watch-name rule out of the bullet above. The current rule stays in `llm/01-rules.md`. On the checkout that added those checks, `sh llm/check.sh` printed `check: ok` and `swift test` in `EatWatchCore` again reported 31 tests passed.
 
 ## Not verified
 
@@ -33,6 +33,7 @@ Local assistant memory and earlier chat summaries still say some of the followin
 - Body-fat percentage is not stored, not shown, and not read or written through Health.
 - `DayRecord` does not have `fatPercent`.
 - A Health weight does not replace the stored EatWatch row. It replaces the weight used for the trend.
+- The watch app still calls `EatWatchSession.open` with CloudKit left on. `EatWatchWatch/EatWatchWatch.entitlements` sits in the synchronized watch folder and has HealthKit only. The project sets the watch `CFBundleName` from `APP_DISPLAY_NAME`. Calling any of those three facts stale is wrong. The 2026-10-08 built product's `CFBundleName` was `EatWatchWatch`. That product fact is not the current project setting.
 
 ## Ideas Alex considered and rejected
 
@@ -44,7 +45,7 @@ Local assistant memory and earlier chat summaries still say some of the followin
 
 ## Gap that is not a request
 
-The watch target has no iCloud entitlement, so its typed log does not join the iPhone, iPad, and Mac log. Say so if it matters to the task. Do not add the container unless Alex asks.
+A watch log joining the iPhone, iPad, and Mac log is unverified. The watch entitlement has no iCloud container, and the watch app still calls `EatWatchSession.open` with CloudKit left on. The current rule is in `llm/01-rules.md` under Watch target. Do not add the container unless Alex asks.
 
 A Mac-only import that never uploads was described as a compliant way to use Health history on the Mac. It was not built. Do not bolt it onto Import CSV.
 
@@ -55,5 +56,7 @@ These are not the source of truth. They also cover other apps.
 - `/Users/alex/.grok/memory-v2/workspaces/alex-a426792c/topics/eatwatch.md`
 - `/Users/alex/.grok/memory-v2/workspaces/alex-a426792c/topics/icloud-sync.md`
 - `/Users/alex/.grok/memory-v2/workspaces/alex-a426792c/topics/apple-device-testing.md`
+- `/Users/alex/vaults/Seldon/projects/iCloud-sync.md`
+- `/Users/alex/vaults/Seldon/projects/Apple-device-testing.md`
 
-The iCloud note's `DayRecord` field list still includes `fatPercent`. Ignore that list.
+If one of those notes still lists `fatPercent`, says `CODE_SIGN_ENTITLEMENTS` is unset, or calls the watch CloudKit open stale, that sentence is old. Trust the Swift and this briefing.

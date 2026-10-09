@@ -4,11 +4,13 @@ This repository is the Xcode project and the briefing a new assistant should rea
 
 Read `llm/` before changing behavior. If a sentence there and the Swift disagree, the Swift wins. Update the briefing in the same change.
 
+Assistant memory and the Seldon vault are pointers to this repository. They are not a second copy of the rules.
+
 A checkout on Alex's Mac is `/Users/alex/Projects/EatWatch`. Build products, `EatWatchCore/.build/`, and `xcuserdata/` are not in the repo. The app icon PNG is the same file for iPhone and Watch. Its exact bytes are `Supporting/AppIcon.base64`. Restore both copies with `sh Supporting/restore-icons.sh`. The Mac checkout already has the PNGs.
 
 Read in this order before you edit:
 
-1. This file.
+1. This file. `AGENTS.md` only repeats this first step.
 2. `llm/01-rules.md`
 3. The one behavior or build file the task needs.
 
@@ -57,3 +59,22 @@ It is not a patch of the old FatWatch app. Leave `/Users/alex/Projects/FatWatch`
 - iCloud container: `iCloud.com.alexshultz.EatWatch`
 
 Do not put the Apple ID password, or an Apple Developer portal session token, in this repo or in chat.
+
+## Answers a first read should give
+
+A reader who has only this repository should be able to answer these three. The binding text is the file named on each line.
+
+1. A Health weight is used for the on-screen trend and is not written into `DayRecord`. See `llm/01-rules.md` (Same-day weight) and `llm/02-behavior.md` (Health merge).
+2. Import writes every accepted row into the iCloud log. The agreement does not detect Health rows. See the forbidden list in `llm/01-rules.md`.
+3. Sign with `CODE_SIGN_STYLE` Automatic and team `N8D3Z8U4Y9`. Do not set `CODE_SIGNING_ALLOWED=NO`. A device build needs `-allowProvisioningUpdates`. See `llm/04-build.md`.
+
+## Checks
+
+From the repository root, after a behavior or signing edit:
+
+```sh
+sh llm/check.sh
+cd EatWatchCore && swift test
+```
+
+`llm/check.sh` fails if Swift contains `fatPercent`, the agreement line lacks `saves imported data`, the rung range is not `1...48`, the watch entitlement names an iCloud container, the project drops an entitlement-file reference, or the watch app turns CloudKit off. `swift test` is the behavior check. Trust that run's output. The last recorded count is in `llm/05-status.md`.

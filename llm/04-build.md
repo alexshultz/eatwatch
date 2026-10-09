@@ -7,7 +7,7 @@ cd /Users/alex/Projects/EatWatch/EatWatchCore
 swift test
 ```
 
-This does not sign, and it does not prove the iOS or watch UI compiles. Run it first when the change is in `EatWatchCore`.
+This does not sign, and it does not prove the iOS or watch UI compiles. Run it when the change is in `EatWatchCore`. Also run `sh llm/check.sh` from the repository root. That script locks the greppable rules in `llm/01-rules.md`. Trust the test output from the run you just made.
 
 ## Mac app
 
@@ -89,3 +89,11 @@ The import agreement's three lines are static text inside the Settings sheet aft
 - Scheme `EatWatchWatch`: watchOS 27. Not embedded. `PRODUCT_NAME` is `EatWatchWatch`.
 - `GENERATE_INFOPLIST_FILE = YES`. Usage strings are `INFOPLIST_KEY_*` build settings, not hand-written plist entries, except background modes.
 - The project Debug and Release configurations set `baseConfigurationReference` to `Supporting/AppName.xcconfig`.
+
+## Publishing
+
+This Mac has no `gh` login and no GitHub SSH key. `git push` to `git@github.com` is denied. The GitHub contents API writes text. It encodes the string it is given, so a PNG byte above 127 is stored wrong. The icon bytes stay in `Supporting/AppIcon.base64`. Restore both catalogs with `sh Supporting/restore-icons.sh`. Do not send the PNG through that API.
+
+One request that held the whole tree was rejected for length. Requests under about 80 KB succeeded. `raw.githubusercontent.com` has served a cached older README after a new commit. Read the commit through the API before trusting that cache.
+
+Leave `.build`, DerivedData, `xcuserdata`, Apple portal tokens, and `/Users/alex/Projects/FatWatch` out of the repository.
