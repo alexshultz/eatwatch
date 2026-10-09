@@ -49,7 +49,7 @@ Leave these alone when the visible name changes:
 
 Package tests have no display name, so `AppName.display` falls back to `"EatWatch"`. That fallback is not a second place to rename the app.
 
-On the watch build from 2026-10-08, `CFBundleDisplayName` followed `APP_DISPLAY_NAME`, and `CFBundleName` stayed `EatWatchWatch` because Xcode used `PRODUCT_NAME`. Do not rename the watch product to chase the visible name.
+The watch target sets `INFOPLIST_KEY_CFBundleDisplayName` and `INFOPLIST_KEY_CFBundleName` to `$(APP_DISPLAY_NAME)`. `PRODUCT_NAME` stays `$(TARGET_NAME)`, which is `EatWatchWatch`. A 2026-10-08 watch product reported `CFBundleName` as `EatWatchWatch`. A build from the current project file takes `CFBundleName` from `APP_DISPLAY_NAME`. Do not rename the watch product to chase the visible name.
 
 ## Signing and tools
 
@@ -61,7 +61,7 @@ On the watch build from 2026-10-08, `CFBundleDisplayName` followed `APP_DISPLAY_
 
 ## Watch target
 
-`EatWatchWatch` is a separate target. It is not embedded in the iPhone app. Its entitlement file has HealthKit and not the iCloud container. A weight logged on the watch is in that watch's local store and, when write permission exists, in Health. It does not join the EatWatch CloudKit log. Do not add the container as a drive-by fix.
+`EatWatchWatch` is a separate target. It is not embedded in the iPhone app. Its entitlement file has HealthKit and not the iCloud container. `EatWatchWatchApp` calls `EatWatchSession.open` with CloudKit left on. `makeContainer` tries the private database with `try?` and, when that throws, opens a local store. A crash inside CloudKit setup is not a thrown error. The build notes record an `EXC_BREAKPOINT` on the Mac when the iCloud entitlement is missing. The watch app has not been launched, so a watch log joining CloudKit is unverified. Do not add the container as a drive-by fix.
 
 ## Scope
 

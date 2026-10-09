@@ -131,7 +131,7 @@ The apostrophe in line 2 is the typographic `’` used in `AppName.importGuideli
 
 `ResultsObserver` on the main context, with `withContinuousObservation(options: .didSet)`, reloads when the store changes, including a CloudKit import. The token is `~Copyable` and is stored with `@ObservationIgnored`. `RootView` also calls `session.refresh()` when the scene becomes active.
 
-iPhone and watch Info.plists include `UIBackgroundModes` = `remote-notification` via `Supporting/BackgroundModes.plist`. The Mac plist does not. Do not put an Info.plist inside the synchronized `EatWatch/` or `EatWatchWatch/` groups. Xcode both copies and processes it, and the build fails. The entitlements files stay outside those groups too.
+iPhone and watch Info.plists include `UIBackgroundModes` = `remote-notification` via `Supporting/BackgroundModes.plist`. The Mac plist does not. Do not put an Info.plist inside the synchronized `EatWatch/` or `EatWatchWatch/` groups. Xcode both copies and processes it, and the build fails. `EatWatch.entitlements` stays at the project root, outside the synchronized iPhone group. `EatWatchWatch/EatWatchWatch.entitlements` is inside the synchronized watch group. Both are referenced by `CODE_SIGN_ENTITLEMENTS`.
 
 `ICloudSyncState` is account status, not a proof that a row arrived on another device. Two-device sync had not been watched as of 2026-10-08.
 

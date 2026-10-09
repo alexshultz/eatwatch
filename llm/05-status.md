@@ -10,8 +10,10 @@ This file is history. Do not implement a feature from it unless Alex asks again.
 - Mac Debug `xcodebuild` succeeded and was signed `Apple Development: alex.shultz@mac.com (4TRS65CTUB)` with a Mac Team Provisioning Profile for `com.alexshultz.EatWatch`.
 - The built Mac Info.plist had `CFBundleDisplayName` EatWatch, and Health usage strings that mention weight only.
 - Opening that Debug app showed Today. Settings showed the import footnote beginning "EatWatch saves imported data to the EatWatch iCloud log." The agreement sheet showed all three lines and the title "Import only your own log".
-- Watch Debug `xcodebuild` for `generic/platform=watchOS` succeeded. It was not installed. `CFBundleDisplayName` was EatWatch. `CFBundleName` remained EatWatchWatch.
+- Watch Debug `xcodebuild` for `generic/platform=watchOS` succeeded. It was not installed. `CFBundleDisplayName` was EatWatch. That product's `CFBundleName` remained EatWatchWatch. The project file now sets the watch `CFBundleName` from `APP_DISPLAY_NAME`.
 - The iPhone was not updated to this build. An earlier HealthKit install was copied to the phone and did not launch because the phone was locked. That older install still requested body-fat access.
+
+On 2026-10-09 the Xcode source and these notes were published together in `alexshultz/eatwatch`.
 
 ## Not verified
 
