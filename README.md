@@ -1,8 +1,10 @@
-# EatWatch briefing
+# EatWatch
 
-This repository is the handoff for a new assistant. It is not the Xcode project and it does not build.
+This repository is the Xcode project and the briefing a new assistant should read before editing.
 
-The source tree is on Alex's Mac at `/Users/alex/Projects/EatWatch`. That folder is not a git checkout of this repo. If a sentence here and the source disagree, the source wins. Update this briefing after you change the behavior.
+Read `llm/` before changing behavior. If a sentence there and the Swift disagree, the Swift wins. Update the briefing in the same change.
+
+A checkout on Alex's Mac is `/Users/alex/Projects/EatWatch`. Build products, `EatWatchCore/.build/`, and `xcuserdata/` are not in the repo. The app icon PNG is the same file for iPhone and Watch. Its exact bytes are `Supporting/AppIcon.base64`. Restore both copies with `sh Supporting/restore-icons.sh`. The Mac checkout already has the PNGs.
 
 Read in this order before you edit:
 
