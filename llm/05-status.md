@@ -15,6 +15,8 @@ This file is history. Do not implement a feature from it unless Alex asks again.
 
 On 2026-10-09 the Xcode source and these notes were published together in `alexshultz/eatwatch`. A later commit on that branch added the first-read answers in `README.md` and `llm/check.sh`, and took the current watch-name rule out of the bullet above. The current rule stays in `llm/01-rules.md`. On the checkout that added those checks, `sh llm/check.sh` printed `check: ok` and `swift test` in `EatWatchCore` again reported 31 tests passed.
 
+The same published branch then followed `projects/Apple-OS27-Design-Guidelines` for the interface. Today is a grouped list, the weight uses `.font(.largeTitle)` and can wrap, the chart marks have their own accessibility labels, the accent color has two increased-contrast appearances, and the icon is `AppIcon.icon` in both app folders. Mac Debug and watch Debug both built before that commit. `sh llm/check.sh` locks those facts. `EatWatchCore` was unchanged, so the package tests were not re-run for it.
+
 ## Not verified
 
 - Two devices receiving the same CloudKit row.

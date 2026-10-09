@@ -48,8 +48,8 @@ This repository is the source tree. A checkout on Alex's Mac is `/Users/alex/Pro
 | `EatWatch/RootView.swift` | Tabs, lock, refresh on active. |
 | `EatWatch/SettingsView.swift` | Units, height, lock, Health button, CSV, delete-all, import agreement. |
 | `EatWatch/EntrySheet.swift` | Create and edit a day. Rung stepper uses `ExerciseRung.range`. |
-| `EatWatch/TodayView.swift` | Navigation title is `AppName.display`. |
-| `EatWatch/LogRow.swift`, `TodayReading.swift` | Show flag, rung, and note. |
+| `EatWatch/TodayView.swift` | Today list. Navigation title is `AppName.display`. Shows the weight, trend, variance, flag, rung, and note. |
+| `EatWatch/LogRow.swift` | Shows flag, rung, and note in the log. |
 | `EatWatchWatch/WatchEntryView.swift` | Watch editor. Preserves the note. |
 | `Supporting/AppName.xcconfig` | The one display-name setting. Included by the project Debug and Release configurations. |
 | `Supporting/BackgroundModes.plist` | `remote-notification` only. |

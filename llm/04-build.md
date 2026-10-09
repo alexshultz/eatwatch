@@ -92,7 +92,9 @@ The import agreement's three lines are static text inside the Settings sheet aft
 
 ## Publishing
 
-This Mac has no `gh` login and no GitHub SSH key. `git push` to `git@github.com` is denied. The GitHub contents API writes text. It encodes the string it is given, so a PNG byte above 127 is stored wrong. The icon bytes stay in `Supporting/AppIcon.base64`. Restore both catalogs with `sh Supporting/restore-icons.sh`. Do not send the PNG through that API.
+`gh` on this Mac is logged in as alexshultz. `git push` over HTTPS uses the gh credential helper. SSH to `git@github.com` authenticates as alexshultz. Existing remotes stay HTTPS. Global `user.name` and `user.email` are unset, so a local commit has no author until those are set.
+
+The app icon is the `AppIcon.icon` package in `EatWatch/` and `EatWatchWatch/`. The GitHub contents API writes text. It encodes the string it is given, so a PNG byte above 127 is stored wrong. Do not send `Assets/Clock.png` through that API.
 
 One request that held the whole tree was rejected for length. Requests under about 80 KB succeeded. `raw.githubusercontent.com` has served a cached older README after a new commit. Read the commit through the API before trusting that cache.
 

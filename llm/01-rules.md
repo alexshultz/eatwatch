@@ -2,7 +2,9 @@
 
 Read this before editing. These are decisions Alex already made. If a task asks for something this file forbids, stop and say so. Do not ship a partial version that gets the data into iCloud by another path.
 
-`llm/check.sh` fails when a later edit breaks the greppable parts of these rules: no `fatPercent` in Swift, the agreement line says `saves imported data`, the rung range is `1...48`, the watch entitlement has no iCloud container, and the watch app still calls `EatWatchSession.open` with CloudKit left on. Run it from the repository root.
+`llm/check.sh` fails when a later edit breaks the greppable parts of these rules: no `fatPercent` in Swift, the agreement line says `saves imported data`, the rung range is `1...48`, the watch entitlement has no iCloud container, the watch app still calls `EatWatchSession.open` with CloudKit left on, and the interface locks hold. Those locks are the design-guidelines sentence, `AppIcon.icon` in both apps, no flat icon restore path, Today as a `List` with `.font(.largeTitle)`, no `minimumScaleFactor`, per-mark chart labels, a visible watch chart axis, and two increased-contrast accent appearances. Run it from the repository root.
+
+For screens, icons, type, color, and charts, the Seldon vault note `projects/Apple-OS27-Design-Guidelines` outranks this repository. Health, import, and signing rules in this file still bind.
 
 ## Health and iCloud
 

@@ -2,11 +2,13 @@
 
 This repository is the Xcode project and the briefing a new assistant should read before editing.
 
-Read `llm/` before changing behavior. If a sentence there and the Swift disagree, the Swift wins. Update the briefing in the same change.
+Read `llm/` before changing behavior. When a behavior sentence and the Swift disagree, the Swift wins. Update the briefing in the same change.
 
-Assistant memory and the Seldon vault are pointers to this repository. They are not a second copy of the rules.
+For interface work, the Seldon vault note `projects/Apple-OS27-Design-Guidelines` outranks this repository. Health, import, and signing rules in `llm/01-rules.md` still bind.
 
-A checkout on Alex's Mac is `/Users/alex/Projects/EatWatch`. Build products, `EatWatchCore/.build/`, and `xcuserdata/` are not in the repo. The app icon PNG is the same file for iPhone and Watch. Its exact bytes are `Supporting/AppIcon.base64`. Restore both copies with `sh Supporting/restore-icons.sh`. The Mac checkout already has the PNGs.
+Assistant memory and the rest of the Seldon vault are pointers to this repository. They are not a second copy of the rules.
+
+A checkout on Alex's Mac is `/Users/alex/Projects/EatWatch`. Build products, `EatWatchCore/.build/`, and `xcuserdata/` are not in the repo. The app icon is `EatWatch/AppIcon.icon`, copied as `EatWatchWatch/AppIcon.icon`. It is an Icon Composer package: a teal field and one glass clock layer. The artwork is square. The system masks the corners. Do not put a flat PNG back in the asset catalog.
 
 Read in this order before you edit:
 

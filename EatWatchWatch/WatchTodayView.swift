@@ -49,8 +49,6 @@ struct WatchTodayView: View {
         if let today = store.analysis.point(on: .today()) {
             Text(MeasureFormat.weight(today.weightPounds, unit: settings.weightUnit))
                 .font(.title2.bold())
-                .minimumScaleFactor(0.6)
-                .lineLimit(1)
             Text("Trend \(MeasureFormat.weight(today.trendPounds, unit: settings.weightUnit))")
                 .foregroundStyle(.secondary)
         } else if let latest = store.analysis.latest {

@@ -17,6 +17,8 @@ struct ChartPlot: View {
                 .foregroundStyle(.tint)
                 .lineStyle(StrokeStyle(lineWidth: 2.5))
                 .interpolationMethod(.linear)
+                .accessibilityLabel("Trend, \(spokenDay(point.day))")
+                .accessibilityValue(spokenWeight(point.trendPounds, unit: settings.weightUnit))
                 if let weight = point.weightPounds {
                     PointMark(
                         x: .value("Day", point.day.date()),
@@ -24,6 +26,8 @@ struct ChartPlot: View {
                     )
                     .foregroundStyle(.primary)
                     .symbolSize(28)
+                    .accessibilityLabel("Scale, \(spokenDay(point.day))")
+                    .accessibilityValue(spokenWeight(weight, unit: settings.weightUnit))
                 }
             }
         }
@@ -31,8 +35,6 @@ struct ChartPlot: View {
         .chartYAxisLabel(settings.weightUnit.abbreviation)
         .chartLegend(.hidden)
         .frame(maxWidth: .infinity, minHeight: 280, maxHeight: .infinity)
-        .accessibilityLabel("Weight chart")
-        .accessibilityValue(summary)
     }
 
     @ChartContentBuilder
@@ -40,6 +42,7 @@ struct ChartPlot: View {
         if let goal = settings.goalPounds, let first = points.first, let last = points.last {
             let center = settings.weightUnit.fromPounds(goal)
             let band = settings.weightUnit.fromPounds(TrendMath.goalBandPounds)
+            let bandUnit: WeightUnit = settings.weightUnit == .stones ? .pounds : settings.weightUnit
             RectangleMark(
                 xStart: .value("Start", first.day.date()),
                 xEnd: .value("End", last.day.date()),
@@ -47,9 +50,13 @@ struct ChartPlot: View {
                 yEnd: .value("High", center + band)
             )
             .foregroundStyle(.tint.opacity(0.12))
+            .accessibilityLabel("Goal band")
+            .accessibilityValue("Within \(spokenWeight(TrendMath.goalBandPounds, unit: bandUnit)) of \(spokenWeight(goal, unit: settings.weightUnit))")
             RuleMark(y: .value("Goal", center))
                 .foregroundStyle(.tint.opacity(0.8))
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 4]))
+                .accessibilityLabel("Goal")
+                .accessibilityValue(spokenWeight(goal, unit: settings.weightUnit))
         }
     }
 
@@ -65,8 +72,22 @@ struct ChartPlot: View {
         return (low - pad)...(high + pad)
     }
 
-    private var summary: String {
-        guard let latest = points.last else { return "Empty" }
-        return "Latest trend \(MeasureFormat.weight(latest.trendPounds, unit: settings.weightUnit))"
+    private func spokenDay(_ day: Day) -> String {
+        day.date().formatted(.dateTime.month(.wide).day().year())
+    }
+
+    private func spokenWeight(_ pounds: Double, unit: WeightUnit) -> String {
+        switch unit {
+        case .pounds:
+            return MeasureFormat.number(pounds, digits: 1) + " pounds"
+        case .kilograms:
+            return MeasureFormat.number(unit.fromPounds(pounds), digits: 1) + " kilograms"
+        case .stones:
+            let absolute = abs(pounds)
+            let stones = Int(absolute / WeightUnit.poundsPerStone)
+            let remainder = absolute - Double(stones) * WeightUnit.poundsPerStone
+            let sign = pounds < 0 ? "minus " : ""
+            return "\(sign)\(stones) stones \(MeasureFormat.number(remainder, digits: 1)) pounds"
+        }
     }
 }
